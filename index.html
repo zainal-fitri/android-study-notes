@@ -34,6 +34,7 @@
                     <a href="#features" class="hover:text-green-600 transition">Features</a>
                     <a href="#devices" class="hover:text-green-600 transition">Devices</a>
                     <a href="#architecture" class="hover:text-green-600 transition font-bold">Architecture</a>
+                    <a href="#quiz" class="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-200 transition font-medium">Quiz</a>
                 </div>
             </div>
         </div>
@@ -238,9 +239,68 @@
         </div>
     </section>
 
+    <!-- Quiz Section -->
+    <section id="quiz" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900">Test Your Knowledge</h2>
+                <p class="mt-4 text-gray-600">See how much you remember about the Android Ecosystem.</p>
+            </div>
+
+            <div id="quiz-card" class="bg-slate-50 border border-gray-200 rounded-2xl p-8 shadow-lg relative overflow-hidden">
+                <!-- Start Screen -->
+                <div id="quiz-start" class="text-center py-10">
+                    <i class="fa-solid fa-clipboard-question text-6xl text-green-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Ready to start?</h3>
+                    <p class="text-gray-600 mb-4">5 questions to test your understanding of Layers, Versions, and Devices.</p>
+                    <!-- Added High Score Display -->
+                    <div class="inline-block bg-green-100 px-4 py-2 rounded-full mb-8">
+                        <p class="text-green-800 font-bold text-sm">Best Score: <span id="start-high-score">0</span>/5</p>
+                    </div>
+                    <br>
+                    <button onclick="startQuiz()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition shadow-lg transform hover:scale-105">
+                        Start Quiz
+                    </button>
+                </div>
+
+                <!-- Question Screen (Hidden by default) -->
+                <div id="quiz-question" class="hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-sm font-bold text-green-600 uppercase tracking-wider">Question <span id="q-number">1</span>/5</span>
+                        <span class="text-sm text-gray-500">Score: <span id="score">0</span></span>
+                    </div>
+                    <h3 id="q-text" class="text-xl font-bold text-slate-900 mb-6">Question text goes here?</h3>
+                    <div id="q-options" class="space-y-3">
+                        <!-- Options injected by JS -->
+                    </div>
+                    <div id="q-feedback" class="mt-6 p-4 rounded-lg hidden">
+                        <!-- Feedback injected by JS -->
+                    </div>
+                    <button id="next-btn" onclick="nextQuestion()" class="mt-6 w-full bg-slate-800 text-white font-bold py-3 rounded-lg hover:bg-slate-700 transition hidden">
+                        Next Question
+                    </button>
+                </div>
+
+                <!-- Result Screen (Hidden by default) -->
+                <div id="quiz-result" class="hidden text-center py-10">
+                    <div id="result-icon" class="text-6xl mb-6"></div>
+                    <h3 class="text-3xl font-bold mb-2">Quiz Complete!</h3>
+                    <p class="text-xl text-gray-600 mb-4">You scored <span id="final-score" class="font-bold text-slate-900">0</span> out of 5</p>
+                    <div id="new-record-badge" class="hidden inline-block bg-yellow-100 px-4 py-1 rounded-full mb-8 border border-yellow-300">
+                        <p class="text-yellow-700 font-bold text-sm">🏆 New High Score!</p>
+                    </div>
+                    <div class="block"></div>
+                    <button onclick="resetQuiz()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition shadow-lg">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-slate-950 text-gray-500 py-8 text-center">
-        <p>&copy; 2024 Android Study Notes. Generated for GitHub Pages.</p>
+        <p>&copy; 2024 Android Study Notes.</p>
     </footer>
 
     <!-- Script for Interactivity -->
@@ -286,6 +346,161 @@
 
             // Highlight selected
             document.getElementById('layer-'+id).classList.add('ring-4', 'ring-green-400', 'scale-105');
+        }
+
+        // --- QUIZ LOGIC ---
+        const quizQuestions = [
+            {
+                question: "Which layer interacts directly with the physical hardware (camera, Wi-Fi)?",
+                options: ["Java API Framework", "Linux Kernel", "Android Runtime", "System Apps"],
+                correct: 1, // Index of correct answer
+                explanation: "The Linux Kernel is the foundation that manages drivers and direct interaction with the hardware."
+            },
+            {
+                question: "What solves the problem of 'Fragmentation' (thousands of different devices)?",
+                options: ["Hardware Abstraction Layer (HAL)", "The Home Screen", "Bluetooth", "Material Design"],
+                correct: 0,
+                explanation: "HAL acts as a translator so apps don't need to know the specific hardware details of every device."
+            },
+            {
+                question: "Which era of Android versions was named after sweets like KitKat and Oreo?",
+                options: ["The Modern Era", "The Early Days", "The Sweet Era", "The Future Era"],
+                correct: 2,
+                explanation: "Google used dessert names alphabetically from Cupcake (1.5) up until Pie (9.0)."
+            },
+            {
+                question: "How does Android Runtime (ART) prevent a single app crash from freezing the phone?",
+                options: ["It restarts the phone", "It disconnects the battery", "It gives every app its own 'Sandbox' process", "It deletes the app"],
+                correct: 2,
+                explanation: "By isolating apps in their own processes, a crash in one 'cubicle' doesn't affect the others."
+            },
+            {
+                question: "True or False: System Apps (like Dialer) use a completely different framework than apps you build.",
+                options: ["True", "False"],
+                correct: 1,
+                explanation: "False! They use the same Java API Framework, but they have special 'VIP' permissions."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // Initialize High Score Display on Load
+        window.onload = function() {
+            const savedScore = localStorage.getItem('androidQuizHighScore') || 0;
+            document.getElementById('start-high-score').innerText = savedScore;
+        };
+
+        function startQuiz() {
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-question').classList.remove('hidden');
+            currentQuestionIndex = 0;
+            score = 0;
+            updateScore();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = quizQuestions[currentQuestionIndex];
+            document.getElementById('q-number').innerText = currentQuestionIndex + 1;
+            document.getElementById('q-text').innerText = q.question;
+            
+            const optionsDiv = document.getElementById('q-options');
+            optionsDiv.innerHTML = '';
+            
+            document.getElementById('q-feedback').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition flex items-center";
+                btn.onclick = () => checkAnswer(index, btn);
+                btn.innerHTML = `<div class="w-6 h-6 rounded-full border border-gray-300 mr-3 flex-shrink-0"></div> ${opt}`;
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            // Disable all buttons
+            const buttons = document.getElementById('q-options').children;
+            for(let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            btnElement.classList.remove('opacity-50');
+
+            const q = quizQuestions[currentQuestionIndex];
+            const feedbackDiv = document.getElementById('q-feedback');
+            
+            if(selectedIndex === q.correct) {
+                score++;
+                updateScore();
+                btnElement.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                btnElement.querySelector('div').classList.add('bg-green-500', 'border-green-500');
+                feedbackDiv.innerHTML = `<p class="font-bold text-green-700">Correct! 🎉</p><p class="text-sm text-green-600 mt-1">${q.explanation}</p>`;
+                feedbackDiv.className = "mt-6 p-4 rounded-lg bg-green-50 border border-green-200 block";
+            } else {
+                btnElement.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                btnElement.querySelector('div').classList.add('bg-red-500', 'border-red-500');
+                
+                // Highlight correct one
+                const correctBtn = buttons[q.correct];
+                correctBtn.classList.remove('opacity-50');
+                correctBtn.classList.add('bg-green-50', 'border-green-300');
+                
+                feedbackDiv.innerHTML = `<p class="font-bold text-red-700">Incorrect</p><p class="text-sm text-red-600 mt-1">${q.explanation}</p>`;
+                feedbackDiv.className = "mt-6 p-4 rounded-lg bg-red-50 border border-red-200 block";
+            }
+
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if(currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('score').innerText = score;
+        }
+
+        function showResults() {
+            document.getElementById('quiz-question').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('final-score').innerText = score;
+            
+            // Check and Save High Score
+            const currentHighScore = localStorage.getItem('androidQuizHighScore') || 0;
+            const badge = document.getElementById('new-record-badge');
+            
+            if (score > currentHighScore) {
+                localStorage.setItem('androidQuizHighScore', score);
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+            
+            const resultIcon = document.getElementById('result-icon');
+            if(score === 5) {
+                resultIcon.innerHTML = '🏆';
+                resultIcon.className = 'text-6xl mb-6 animate-bounce';
+            } else if(score >= 3) {
+                resultIcon.innerHTML = '👍';
+            } else {
+                resultIcon.innerHTML = '📚';
+            }
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-result').classList.add('hidden');
+            // Update the start screen high score just in case they beat it
+            const savedScore = localStorage.getItem('androidQuizHighScore') || 0;
+            document.getElementById('start-high-score').innerText = savedScore;
+            startQuiz();
         }
     </script>
 </body>
