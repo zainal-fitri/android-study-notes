@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Android | The Ecosystem</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .android-green { color: #3DDC84; }
+        .bg-android-green { background-color: #3DDC84; }
+        .layer-hover:hover { transform: scale(1.02); }
+        .active-layer { border-left: 5px solid #3DDC84; background-color: #f0fdf4; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fa-brands fa-android text-3xl text-green-500 mr-3"></i>
+                    <span class="font-bold text-xl tracking-tight">Discover Android</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#history" class="hover:text-green-600 transition">History</a>
+                    <a href="#ecosystem" class="hover:text-green-600 transition">Ecosystem</a>
+                    <a href="#architecture" class="hover:text-green-600 transition font-bold">Architecture</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-slate-900 text-white pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-6">The World's Operating System</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+                From a simple mobile OS to powering cars, watches, and billions of devices. 
+                Explore the history, the ecosystem, and the engine under the hood.
+            </p>
+            <a href="#architecture" class="bg-green-500 hover:bg-green-600 text-slate-900 font-bold py-3 px-8 rounded-full transition shadow-lg">
+                View Architecture
+            </a>
+        </div>
+    </header>
+
+    <!-- 1.1.1 Versions History -->
+    <section id="history" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900">1.1.1 A Legacy of Sweets</h2>
+                <p class="mt-4 text-gray-600">The evolution from Cupcake to Android 14+</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                    <div class="text-4xl mb-4">🧁 ➡️ 🍩</div>
+                    <h3 class="font-bold text-xl mb-2">The Early Days</h3>
+                    <p class="text-sm text-gray-500 mb-2">2008 - 2009</p>
+                    <p class="text-gray-700">Alpha, Beta, Cupcake (1.5), and Donut (1.6). Focused on basic functionality like on-screen keyboards and widgets.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                    <div class="text-4xl mb-4">🍪 ➡️ 🥧</div>
+                    <h3 class="font-bold text-xl mb-2">The Sweet Era</h3>
+                    <p class="text-sm text-gray-500 mb-2">2010 - 2018</p>
+                    <p class="text-gray-700">Major UI overhauls (Holo, Material Design). Included Gingerbread, Ice Cream Sandwich, KitKat, Lollipop, and Pie.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                    <div class="text-4xl mb-4">🤖 10+</div>
+                    <h3 class="font-bold text-xl mb-2">Modern Era</h3>
+                    <p class="text-sm text-gray-500 mb-2">2019 - Present</p>
+                    <p class="text-gray-700">Dropped dessert names for global accessibility (Android 10, 11, 12...). Focus on Privacy, AI, and Foldables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1.1.2 & 1.1.4 Ecosystem & Devices -->
+    <section id="ecosystem" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">1.1.2 & 1.1.4 The Ecosystem</h2>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Android is open source (AOSP) and highly customizable. This flexibility allows it to power a diverse range of hardware beyond just smartphones.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-mobile-screen-button w-8 text-green-600 text-xl"></i>
+                            <span><strong>Phones:</strong> Flagships, Foldables, Gaming, Budget.</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-clock w-8 text-green-600 text-xl"></i>
+                            <span><strong>Wearables:</strong> Wear OS watches and fitness trackers.</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-car w-8 text-green-600 text-xl"></i>
+                            <span><strong>Auto:</strong> Android Auto (Projection) & Android Automotive OS (Native).</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-tv w-8 text-green-600 text-xl"></i>
+                            <span><strong>TV:</strong> Android TV and Google TV streaming sticks.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i class="fa-brands fa-linux text-4xl text-slate-800 mb-3"></i>
+                        <h4 class="font-bold">Open Source</h4>
+                        <p class="text-xs text-gray-500">Built on Linux</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i class="fa-solid fa-palette text-4xl text-purple-500 mb-3"></i>
+                        <h4 class="font-bold">Custom UI</h4>
+                        <p class="text-xs text-gray-500">Themes & Launchers</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i class="fa-brands fa-google text-4xl text-blue-500 mb-3"></i>
+                        <h4 class="font-bold">GMS</h4>
+                        <p class="text-xs text-gray-500">Google Services</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i class="fa-solid fa-microchip text-4xl text-orange-500 mb-3"></i>
+                        <h4 class="font-bold">24k+ Devices</h4>
+                        <p class="text-xs text-gray-500">Models Globally</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1.1.3 Architecture Interactive Section -->
+    <section id="architecture" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-green-400">1.1.3 Android Architecture</h2>
+                <p class="mt-4 text-gray-400">The 5-layer stack that makes it all work. Click a layer to explore.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- The Stack Visualization -->
+                <div class="lg:w-1/2 space-y-2">
+                    <!-- Layer 5 -->
+                    <div onclick="showLayer(5)" id="layer-5" class="cursor-pointer bg-blue-600 p-4 rounded text-center font-bold hover:bg-blue-500 transition border-l-4 border-transparent">
+                        System Apps
+                    </div>
+                    <!-- Layer 4 -->
+                    <div onclick="showLayer(4)" id="layer-4" class="cursor-pointer bg-blue-700 p-4 rounded text-center font-bold hover:bg-blue-600 transition border-l-4 border-transparent">
+                        Java API Framework
+                    </div>
+                    <!-- Layer 3 -->
+                    <div onclick="showLayer(3)" id="layer-3" class="cursor-pointer bg-purple-700 p-4 rounded text-center font-bold hover:bg-purple-600 transition border-l-4 border-transparent">
+                        Native Libraries & Android Runtime (ART)
+                    </div>
+                    <!-- Layer 2 -->
+                    <div onclick="showLayer(2)" id="layer-2" class="cursor-pointer bg-orange-600 p-4 rounded text-center font-bold hover:bg-orange-500 transition border-l-4 border-transparent">
+                        Hardware Abstraction Layer (HAL)
+                    </div>
+                    <!-- Layer 1 -->
+                    <div onclick="showLayer(1)" id="layer-1" class="cursor-pointer bg-red-700 p-4 rounded text-center font-bold hover:bg-red-600 transition border-l-4 border-transparent">
+                        Linux Kernel
+                    </div>
+                </div>
+
+                <!-- The Info Panel -->
+                <div class="lg:w-1/2 bg-slate-800 p-8 rounded-xl shadow-2xl border border-slate-700">
+                    <h3 id="info-title" class="text-2xl font-bold text-green-400 mb-2">Select a Layer</h3>
+                    <p id="info-desc" class="text-gray-300 leading-relaxed mb-6">
+                        Click on any layer in the stack on the left to understand its specific role in the Android operating system.
+                    </p>
+                    
+                    <div class="bg-slate-900 p-4 rounded border border-slate-600">
+                        <h4 class="text-sm uppercase tracking-wider text-gray-500 mb-1">Analogy</h4>
+                        <p id="info-analogy" class="italic text-yellow-100">
+                            "The layers of a cake."
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-gray-500 py-8 text-center">
+        <p>&copy; 2024 Android Study Notes. Generated for GitHub Pages.</p>
+    </footer>
+
+    <!-- Script for Interactivity -->
+    <script>
+        const layerData = {
+            1: {
+                title: "1. Linux Kernel",
+                desc: "The foundation of Android. It interacts directly with the physical hardware (camera, Wi-Fi, screen) using drivers. It handles power management, memory management, and security permissions.",
+                analogy: "The 'Engine Room' or Concrete Foundation. It supports everything above it and talks to the metal."
+            },
+            2: {
+                title: "2. Hardware Abstraction Layer (HAL)",
+                desc: "Solves fragmentation. It provides a standard interface so higher-level apps don't need to know the specific details of the hardware driver (e.g., Samsung vs Sony camera).",
+                analogy: "The 'Universal Travel Adapter' or 'Restaurant Menu'. It translates your generic order ('Camera Open') into specific instructions the hardware understands."
+            },
+            3: {
+                title: "3. Android Runtime (ART) & Libraries",
+                desc: "ART compiles app bytecode into native machine code (AOT compilation) and manages memory. It provides each app with its own isolated process ('Sandbox') so a crash doesn't freeze the phone.",
+                analogy: "The 'Office Manager'. Assigns every employee (App) a private cubicle so fires don't spread."
+            },
+            4: {
+                title: "4. Java API Framework",
+                desc: "The toolkit for developers. Provides building blocks like the View System (buttons, lists), Notification Manager, and Activity Manager (navigation).",
+                analogy: "The 'Toolbox'. Instead of making a hammer from scratch, you just grab one from the shelf to build your house."
+            },
+            5: {
+                title: "5. System Apps",
+                desc: "The top layer that users actually see (Dialer, Home Screen, Contacts). They use the API Framework but have special 'Signature Permissions' to perform sensitive tasks.",
+                analogy: "The 'VIP Guests'. They use the same lobby entrance, but have a special badge to access restricted areas."
+            }
+        };
+
+        function showLayer(id) {
+            // Update Text
+            document.getElementById('info-title').innerText = layerData[id].title;
+            document.getElementById('info-desc').innerText = layerData[id].desc;
+            document.getElementById('info-analogy').innerText = '"' + layerData[id].analogy + '"';
+
+            // Reset styles
+            for(let i=1; i<=5; i++) {
+                document.getElementById('layer-'+i).classList.remove('ring-4', 'ring-green-400', 'scale-105');
+            }
+
+            // Highlight selected
+            document.getElementById('layer-'+id).classList.add('ring-4', 'ring-green-400', 'scale-105');
+        }
+    </script>
+</body>
+</html>
