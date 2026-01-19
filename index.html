@@ -17,6 +17,58 @@
         .bg-android-green { background-color: #3DDC84; }
         .layer-hover:hover { transform: scale(1.02); }
         .active-layer { border-left: 5px solid #3DDC84; background-color: #f0fdf4; }
+        
+        /* Lifecycle Styles */
+        .lifecycle-step { cursor: pointer; transition: all 0.2s; }
+        .lifecycle-step:hover { background-color: #f0fdf4; transform: translateX(5px); }
+
+        /* Flowchart Styles */
+        .flow-method { 
+            background: white; 
+            border: 2px solid #e2e8f0; 
+            border-radius: 8px; 
+            padding: 10px; 
+            text-align: center; 
+            font-family: monospace;
+            font-weight: bold; 
+            width: 100%; 
+            position: relative; 
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .flow-method:hover {
+            border-color: #3DDC84;
+            background-color: #f0fdf4;
+            transform: scale(1.02);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .flow-state {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 4px 0;
+            font-weight: 600;
+        }
+        .flow-arrow { display: flex; justify-content: center; height: 20px; align-items: center; color: #cbd5e1; }
+        
+        /* Resumed State Highlight */
+        .flow-active-state {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        /* Modal Animation */
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow-x: hidden; overflow-y: hidden !important; }
+        /* Badge Styles */
+        .badge-legacy { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -30,11 +82,27 @@
                     <span class="font-bold text-xl tracking-tight">Discover Android</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="#history" class="hover:text-green-600 transition">Versions</a>
-                    <a href="#features" class="hover:text-green-600 transition">Features</a>
-                    <a href="#devices" class="hover:text-green-600 transition">Devices</a>
-                    <a href="#architecture" class="hover:text-green-600 transition font-bold">Architecture</a>
-                    <a href="#quiz" class="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-200 transition font-medium">Quiz</a>
+                    
+                    <!-- Notes Dropdown -->
+                    <div class="relative group h-full flex items-center">
+                        <button class="hover:text-green-600 transition text-sm font-medium flex items-center focus:outline-none">
+                            Notes <i class="fa-solid fa-chevron-down ml-1 text-xs opacity-75"></i>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="absolute left-0 top-12 w-48 bg-white shadow-xl rounded-lg border border-gray-100 hidden group-hover:block overflow-hidden z-20">
+                            <a href="#history" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 border-b border-gray-50">Versions</a>
+                            <a href="#features" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 border-b border-gray-50">Features</a>
+                            <a href="#devices" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 border-b border-gray-50">Devices</a>
+                            <a href="#architecture" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 border-b border-gray-50">Architecture</a>
+                            <a href="#ui" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700">UI & Layouts</a>
+                        </div>
+                    </div>
+
+                    <!-- Practical Guides -->
+                    <a href="#ui" class="hover:text-green-600 transition text-sm font-medium">Practical Guides</a>
+
+                    <!-- Quiz -->
+                    <a href="#quiz" class="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-200 transition font-medium text-sm">Quiz</a>
                 </div>
             </div>
         </div>
@@ -48,8 +116,8 @@
                 From a simple mobile OS to powering cars, watches, and billions of devices. 
                 Explore the history, the ecosystem, and the engine under the hood.
             </p>
-            <a href="#architecture" class="bg-green-500 hover:bg-green-600 text-slate-900 font-bold py-3 px-8 rounded-full transition shadow-lg">
-                View Architecture
+            <a href="#ui" class="bg-green-500 hover:bg-green-600 text-slate-900 font-bold py-3 px-8 rounded-full transition shadow-lg">
+                Start Building UI
             </a>
         </div>
     </header>
@@ -88,7 +156,7 @@
         </div>
     </section>
 
-    <!-- 1.1.2 Features of Android (New Dedicated Section) -->
+    <!-- 1.1.2 Features of Android -->
     <section id="features" class="py-20 bg-slate-50 border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
@@ -239,15 +307,158 @@
         </div>
     </section>
 
+    <!-- 2.1 Construct UI & Lifecycle -->
+    <section id="ui" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900">Practical Guides: UI & Lifecycle</h2>
+                <p class="mt-4 text-gray-600">Understanding how to build screens and manage app states.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- 2.1.1 Activity Life Cycle (NEW DIAGRAM) -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
+                    <h3 class="text-2xl font-bold mb-2 flex items-center text-slate-800">
+                        <i class="fa-solid fa-arrows-spin text-green-500 mr-3"></i> 
+                        Activity Lifecycle
+                    </h3>
+                    <p class="text-gray-600 mb-6 text-sm text-center">
+                        Click on the <strong>methods</strong> (white boxes) in the flow to view details.
+                    </p>
+                    
+                    <!-- Integrated Flowchart with States -->
+                    <div class="flex flex-col items-center justify-center text-xs w-full max-w-xs">
+                        
+                        <!-- Start -->
+                        <div class="bg-slate-800 text-white px-4 py-2 rounded-full font-bold mb-1 shadow">Activity Launched</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                        
+                        <!-- onCreate -->
+                        <div onclick="openLifecycleModal('onCreate')" class="flow-method text-blue-600">onCreate()</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="flow-state">Created</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- onStart -->
+                        <div onclick="openLifecycleModal('onStart')" class="flow-method text-blue-600">onStart()</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="flow-state">Started (Visible)</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- onResume -->
+                        <div onclick="openLifecycleModal('onResume')" class="flow-method text-green-700 border-green-300 bg-green-50 shadow-md ring-2 ring-green-100">onResume()</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="flow-state flow-active-state">Resumed (Interactive)</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- onPause -->
+                        <div onclick="openLifecycleModal('onPause')" class="flow-method text-slate-700">onPause()</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="flow-state">Paused</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- onStop -->
+                        <div onclick="openLifecycleModal('onStop')" class="flow-method text-slate-700">onStop()</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="flow-state">Stopped (Hidden)</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- onDestroy -->
+                        <div onclick="openLifecycleModal('onDestroy')" class="flow-method text-red-600 border-red-100">onDestroy()</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="flow-state">Destroyed</div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <!-- End -->
+                        <div class="bg-black text-white px-4 py-2 rounded-full font-bold mt-1 shadow">Activity Shut Down</div>
+                    </div>
+                </div>
+
+                <!-- 2.1.2 & 2.1.3 UI & Layouts -->
+                <div>
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center text-slate-800">
+                            <i class="fa-solid fa-code text-blue-500 mr-3"></i> 
+                            Creating UI
+                        </h3>
+                        <p class="text-gray-600 text-sm">
+                            Layouts define the structure for your user interface. 
+                            Click on a layout to view code examples and diagrams.
+                        </p>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">Organize Layouts</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        
+                        <!-- Constraint Layout -->
+                        <div onclick="openLayoutModal('constraint')" class="col-span-2 p-4 border rounded-lg bg-green-50 border-green-200 hover:shadow-md transition cursor-pointer group">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-green-800">Constraint Layout</h4>
+                                <i class="fa-solid fa-bezier-curve text-green-600"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-2">The standard for complex UIs. Connect views like rubber bands.</p>
+                        </div>
+
+                        <!-- Frame Layout -->
+                        <div onclick="openLayoutModal('frame')" class="p-4 border rounded-lg hover:border-green-400 hover:shadow-md transition cursor-pointer group">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-slate-700 group-hover:text-green-500">Frame Layout</h4>
+                                <i class="fa-solid fa-layer-group text-gray-300 group-hover:text-green-400"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Simple stacking (Z-index).</p>
+                        </div>
+
+                        <!-- Linear Layout -->
+                        <div onclick="openLayoutModal('linear')" class="p-4 border rounded-lg hover:border-green-400 hover:shadow-md transition cursor-pointer group">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-slate-700 group-hover:text-green-500">Linear Layout</h4>
+                                <i class="fa-solid fa-bars text-gray-300 group-hover:text-green-400"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Vertical or Horizontal list.</p>
+                        </div>
+
+                        <!-- Relative Layout -->
+                        <div onclick="openLayoutModal('relative')" class="p-4 border rounded-lg hover:border-green-400 hover:shadow-md transition cursor-pointer group">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-slate-600 group-hover:text-green-500">Relative Layout</h4>
+                                <i class="fa-solid fa-anchor text-gray-300 group-hover:text-green-400"></i>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2">Position views relative to siblings.</p>
+                        </div>
+
+                        <!-- Table Layout -->
+                        <div onclick="openLayoutModal('table')" class="p-4 border rounded-lg hover:border-green-400 hover:shadow-md transition cursor-pointer group">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-slate-600 group-hover:text-green-500">Table Layout</h4>
+                                <i class="fa-solid fa-table text-gray-300 group-hover:text-green-400"></i>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2">Rigid rows/cols.</p>
+                        </div>
+
+                        <!-- Grid Layout -->
+                        <div onclick="openLayoutModal('grid')" class="col-span-2 p-4 border rounded-lg hover:border-green-400 hover:shadow-md transition cursor-pointer group">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-slate-600 group-hover:text-green-500">Grid Layout</h4>
+                                <i class="fa-solid fa-border-all text-gray-300 group-hover:text-green-400"></i>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2">Flat grid system.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Quiz Section -->
-    <section id="quiz" class="py-20 bg-white">
+    <section id="quiz" class="py-20 bg-slate-50 border-t border-gray-200">
         <div class="max-w-4xl mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-slate-900">Test Your Knowledge</h2>
                 <p class="mt-4 text-gray-600">See how much you remember about the Android Ecosystem.</p>
             </div>
 
-            <div id="quiz-card" class="bg-slate-50 border border-gray-200 rounded-2xl p-8 shadow-lg relative overflow-hidden">
+            <div id="quiz-card" class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg relative overflow-hidden">
                 <!-- Start Screen -->
                 <div id="quiz-start" class="text-center py-10">
                     <i class="fa-solid fa-clipboard-question text-6xl text-green-500 mb-6"></i>
@@ -255,7 +466,7 @@
                     <p class="text-gray-600 mb-4">5 questions to test your understanding of Layers, Versions, and Devices.</p>
                     <!-- Added High Score Display -->
                     <div class="inline-block bg-green-100 px-4 py-2 rounded-full mb-8">
-                        <p class="text-green-800 font-bold text-sm">Best Score: <span id="start-high-score">0</span>/5</p>
+                        <p class="text-green-800 font-bold text-sm">Best Score: <span id="start-high-score">Loading...</span>/5</p>
                     </div>
                     <br>
                     <button onclick="startQuiz()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition shadow-lg transform hover:scale-105">
@@ -298,13 +509,116 @@
         </div>
     </section>
 
+    <!-- DETAILS MODAL (Reused for Layouts & Lifecycle) -->
+    <div id="layout-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onclick="closeLayoutModal()"></div>
+        
+        <div class="modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-[90vh]">
+            <div class="modal-content py-4 text-left px-6">
+                <!-- Title & Close -->
+                <div class="flex justify-between items-center pb-3 border-b">
+                    <h3 id="modal-title" class="text-2xl font-bold text-slate-900">Details</h3>
+                    <div class="cursor-pointer z-50" onclick="closeLayoutModal()">
+                        <i class="fa-solid fa-xmark text-2xl text-gray-500 hover:text-black"></i>
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="py-4">
+                    <!-- Diagram Container (Visible for Layouts) -->
+                    <div id="modal-diagram-container" class="mb-6 flex justify-center bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <div id="modal-diagram"></div>
+                    </div>
+                    
+                    <!-- Icon Container (Visible for Lifecycle) -->
+                    <div id="modal-icon-container" class="hidden mb-6 flex justify-center bg-green-50 p-6 rounded-lg border border-green-200">
+                        <i id="modal-icon" class="fa-solid fa-arrows-spin text-6xl text-green-500"></i>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-green-600 uppercase text-xs tracking-wider mb-2">Analogy</h4>
+                            <p id="modal-analogy" class="text-gray-700 italic border-l-4 border-green-500 pl-3 mb-4">
+                                "Like a stack of pancakes."
+                            </p>
+                            
+                            <h4 id="modal-example-title" class="font-bold text-slate-900 text-sm mb-2">Real World Example</h4>
+                            <p id="modal-example" class="text-gray-600 text-sm mb-4">
+                                Used for simple login forms.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 id="modal-code-title" class="font-bold text-blue-600 uppercase text-xs tracking-wider mb-2">Code Snippet</h4>
+                            <pre id="modal-code" class="bg-slate-800 text-green-400 p-3 rounded text-xs font-mono overflow-x-auto whitespace-pre-wrap">
+                                &lt;LinearLayout ... /&gt;
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-slate-950 text-gray-500 py-8 text-center">
         <p>&copy; 2024 Android Study Notes.</p>
     </footer>
 
-    <!-- Script for Interactivity -->
-    <script>
+    <!-- Firebase & Interactive Logic -->
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Initialize Firebase
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        let globalHighScore = 0;
+        let currentUser = null;
+
+        // Authentication & Data Loading
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                // Fetch High Score from Firestore
+                const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'scores', 'android_basics');
+                try {
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        globalHighScore = docSnap.data().score || 0;
+                    } else {
+                        globalHighScore = 0;
+                    }
+                    document.getElementById('start-high-score').innerText = globalHighScore;
+                } catch (error) {
+                    console.error("Error loading score:", error);
+                    document.getElementById('start-high-score').innerText = "-";
+                }
+            }
+        });
+
+        // Start Auth Flow
+        (async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Auth failed:", error);
+            }
+        })();
+
+
+        // --- DATA & LOGIC ---
+
+        // 1. ARCHITECTURE DATA
         const layerData = {
             1: {
                 title: "1. Linux Kernel",
@@ -333,27 +647,125 @@
             }
         };
 
-        function showLayer(id) {
-            // Update Text
-            document.getElementById('info-title').innerText = layerData[id].title;
-            document.getElementById('info-desc').innerText = layerData[id].desc;
-            document.getElementById('info-analogy').innerText = '"' + layerData[id].analogy + '"';
-
-            // Reset styles
-            for(let i=1; i<=5; i++) {
-                document.getElementById('layer-'+i).classList.remove('ring-4', 'ring-green-400', 'scale-105');
+        // 2. LIFECYCLE DETAILS DATA (Reverted to Detailed Analogies)
+        const lifecycleDetails = {
+            'onCreate': {
+                title: "onCreate()",
+                analogy: "The Birth. A baby is born and gets its DNA (UI layout) but isn't doing anything yet.",
+                example: "This is where you call setContentView() to load your XML layout and initialize variables.",
+                code: `@Override\nprotected void onCreate(Bundle savedState) {\n    super.onCreate(savedState);\n    setContentView(R.layout.activity_main);\n    // Initialize variables\n}`
+            },
+            'onStart': {
+                title: "onStart()",
+                analogy: "Opening your eyes. You exist and are visible, but you are not yet interacting with the world.",
+                example: "The app UI appears on the screen, but you might not be able to tap buttons just yet.",
+                code: `@Override\nprotected void onStart() {\n    super.onStart();\n    // Activity is becoming visible\n}`
+            },
+            'onResume': {
+                title: "onResume()",
+                analogy: "Wide Awake & Working. You are fully active, talking, and moving.",
+                example: "The user is interacting with the app. This is the state the app is in 99% of the time you are using it.",
+                code: `@Override\nprotected void onResume() {\n    super.onResume();\n    // Start animations or camera previews\n}`
+            },
+            'onPause': {
+                title: "onPause()",
+                analogy: "Distracted. Someone interrupts you (a phone call comes in). You stop what you are doing but are still there.",
+                example: "A popup dialog covers part of the screen, or the user is leaving the app. Save unsaved data here!",
+                code: `@Override\nprotected void onPause() {\n    super.onPause();\n    // Save data, stop animations\n}`
+            },
+            'onStop': {
+                title: "onStop()",
+                analogy: "Sleeping. You are still alive (in memory), but not conscious (not visible).",
+                example: "The user pressed the Home button. The app is in the background. It might be killed if memory runs low.",
+                code: `@Override\nprotected void onStop() {\n    super.onStop();\n    // Release heavy resources\n}`
+            },
+            'onDestroy': {
+                title: "onDestroy()",
+                analogy: "Death. The end of the lifecycle.",
+                example: "The user swiped the app away from the recent apps list, or the system killed it to save battery.",
+                code: `@Override\nprotected void onDestroy() {\n    super.onDestroy();\n    // Final cleanup\n}`
             }
+        };
 
-            // Highlight selected
-            document.getElementById('layer-'+id).classList.add('ring-4', 'ring-green-400', 'scale-105');
-        }
+        // 3. LAYOUT DETAILS DATA
+        const layoutDetails = {
+            'constraint': {
+                title: "Constraint Layout",
+                analogy: "Like using rubber bands to tie objects to the walls or to each other.",
+                example: "The Modern Standard. Allows you to center a button exactly between two other images without creating a messy nested structure.",
+                code: `<ConstraintLayout>\n  <Button\n    app:layout_constraintTop_toBottomOf="@id/img"\n    app:layout_constraintStart_toStartOf="parent"/>\n</ConstraintLayout>`,
+                diagram: `<div class="relative w-40 h-32 bg-gray-100 border border-green-300 rounded p-2"><div class="absolute top-2 left-2 w-8 h-8 bg-blue-300 rounded border border-blue-500"></div><div class="absolute bottom-2 right-2 w-8 h-8 bg-blue-300 rounded border border-blue-500"></div><div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-8 bg-green-500 text-white text-[10px] flex items-center justify-center rounded shadow-lg border-2 border-green-600">Centered</div><div class="absolute top-1/2 left-1/2 w-full h-[1px] bg-green-400 transform -translate-x-1/2 -translate-y-1/2 -z-10"></div><div class="absolute top-1/2 left-1/2 w-[1px] h-full bg-green-400 transform -translate-x-1/2 -translate-y-1/2 -z-10"></div></div>`
+            },
+            'frame': {
+                title: "Frame Layout",
+                analogy: "Like a stack of photographs on a table. The last one you place covers the ones below it.",
+                example: "Perfect for overlays, like a 'Play' icon centered on top of a video thumbnail.",
+                code: `<FrameLayout>\n  <ImageView src="video_thumb"/>\n  <ImageView src="play_icon"\n     layout_gravity="center"/>\n</FrameLayout>`,
+                diagram: `<div class="relative w-32 h-32 bg-gray-300 border border-gray-400 rounded shadow-inner flex items-center justify-center">
+                            <div class="absolute inset-2 bg-blue-200 rounded border border-blue-400 flex items-start justify-start p-1 text-[10px] text-blue-800">1. Bottom</div>
+                            <div class="absolute w-16 h-16 bg-red-400 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white text-xs font-bold">2. Top</div>
+                          </div>`
+            },
+            'linear': {
+                title: "Linear Layout",
+                analogy: "Like a train of cars coupled together (Horizontal) or a stack of pancakes (Vertical).",
+                example: "A standard Login form: Username text box, below it a Password box, below that a Login button.",
+                code: `<LinearLayout\n  android:orientation="vertical">\n  <EditText hint="User"/>\n  <EditText hint="Pass"/>\n  <Button text="Login"/>\n</LinearLayout>`,
+                diagram: `<div class="flex flex-col w-32 bg-gray-200 border border-gray-400 p-2 gap-2 rounded shadow-inner">
+                            <div class="h-8 w-full bg-blue-400 rounded border border-blue-600 flex items-center justify-center text-white text-xs">Item 1</div>
+                            <div class="h-8 w-full bg-blue-400 rounded border border-blue-600 flex items-center justify-center text-white text-xs">Item 2</div>
+                            <div class="h-8 w-full bg-green-500 rounded border border-green-700 flex items-center justify-center text-white text-xs font-bold">Item 3</div>
+                          </div>`
+            },
+            'relative': {
+                title: "Relative Layout",
+                analogy: "Like giving directions based on landmarks: 'I am sitting to the left of Bob' or 'Stand below the clock'.",
+                example: "Replaced by ConstraintLayout. Was used for positioning views relative to siblings.",
+                code: `<RelativeLayout>\n  <Button id="btn"\n    layout_alignParentEnd="true"/>\n  <EditText\n    layout_toStartOf="@id/btn"/>\n</RelativeLayout>`,
+                diagram: `<div class="relative w-48 h-32 bg-gray-200 border border-gray-400 p-2 rounded shadow-inner">
+                            <div class="absolute top-2 left-2 w-12 h-12 bg-blue-400 rounded flex items-center justify-center text-white text-xs">A</div>
+                            <div class="absolute top-2 right-2 w-12 h-12 bg-red-400 rounded flex items-center justify-center text-white text-xs">B</div>
+                            <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-green-500 rounded text-center text-[10px] text-white flex items-center justify-center">C (Below A & B)</div>
+                          </div>`
+            },
+            'table': {
+                title: "Table Layout",
+                analogy: "Like an Excel spreadsheet or a classic HTML table.",
+                example: "A Calculator app keypad, where buttons are arranged in strict rows and columns.",
+                code: `<TableLayout>\n  <TableRow>\n    <Button text="1"/>\n    <Button text="2"/>\n    <Button text="3"/>\n  </TableRow>\n</TableLayout>`,
+                diagram: `<div class="w-40 bg-gray-200 border border-gray-400 p-1 rounded shadow-inner flex flex-col gap-1">
+                            <div class="flex gap-1">
+                                <div class="flex-1 h-8 bg-blue-300 border border-blue-500 rounded flex items-center justify-center text-xs">R1-C1</div>
+                                <div class="flex-1 h-8 bg-blue-300 border border-blue-500 rounded flex items-center justify-center text-xs">R1-C2</div>
+                            </div>
+                            <div class="flex gap-1">
+                                <div class="flex-1 h-8 bg-blue-300 border border-blue-500 rounded flex items-center justify-center text-xs">R2-C1</div>
+                                <div class="flex-1 h-8 bg-blue-300 border border-blue-500 rounded flex items-center justify-center text-xs">R2-C2</div>
+                            </div>
+                          </div>`
+            },
+            'grid': {
+                title: "Grid Layout",
+                analogy: "Like a wall of Post-It notes. Flatter than a TableLayout.",
+                example: "Often replaced by RecyclerView with GridLayoutManager for dynamic grids.",
+                code: `<GridLayout\n  columnCount="2">\n  <ImageView src="img1"/>\n  <ImageView src="img2"/>\n  <ImageView src="img3"/>\n  <ImageView src="img4"/>\n</GridLayout>`,
+                diagram: `<div class="grid grid-cols-3 gap-2 w-40 p-2 bg-gray-200 border border-gray-400 rounded shadow-inner">
+                            <div class="aspect-square bg-purple-400 rounded border border-purple-600"></div>
+                            <div class="aspect-square bg-purple-400 rounded border border-purple-600"></div>
+                            <div class="aspect-square bg-purple-400 rounded border border-purple-600"></div>
+                            <div class="aspect-square bg-purple-400 rounded border border-purple-600"></div>
+                            <div class="aspect-square bg-purple-400 rounded border border-purple-600"></div>
+                            <div class="aspect-square bg-purple-400 rounded border border-purple-600"></div>
+                          </div>`
+            }
+        };
 
-        // --- QUIZ LOGIC ---
+        // 4. QUIZ DATA
         const quizQuestions = [
             {
                 question: "Which layer interacts directly with the physical hardware (camera, Wi-Fi)?",
                 options: ["Java API Framework", "Linux Kernel", "Android Runtime", "System Apps"],
-                correct: 1, // Index of correct answer
+                correct: 1, 
                 explanation: "The Linux Kernel is the foundation that manages drivers and direct interaction with the hardware."
             },
             {
@@ -385,20 +797,89 @@
         let currentQuestionIndex = 0;
         let score = 0;
 
-        // Initialize High Score Display on Load
-        window.onload = function() {
-            const savedScore = localStorage.getItem('androidQuizHighScore') || 0;
-            document.getElementById('start-high-score').innerText = savedScore;
+        // --- GLOBAL FUNCTIONS (Attached to window) ---
+
+        // Architecture Layer Interaction
+        window.showLayer = function(id) {
+            document.getElementById('info-title').innerText = layerData[id].title;
+            document.getElementById('info-desc').innerText = layerData[id].desc;
+            document.getElementById('info-analogy').innerText = '"' + layerData[id].analogy + '"';
+            for(let i=1; i<=5; i++) {
+                document.getElementById('layer-'+i).classList.remove('ring-4', 'ring-green-400', 'scale-105');
+            }
+            document.getElementById('layer-'+id).classList.add('ring-4', 'ring-green-400', 'scale-105');
         };
 
-        function startQuiz() {
+        // Modal Logic (Generic)
+        window.openLayoutModal = function(key) {
+            const data = layoutDetails[key];
+            if(!data) return;
+
+            // Show Diagram Container, Hide Icon Container
+            document.getElementById('modal-diagram-container').classList.remove('hidden');
+            document.getElementById('modal-icon-container').classList.add('hidden');
+            
+            // Set Content
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-diagram').innerHTML = data.diagram;
+            document.getElementById('modal-analogy').innerText = `"${data.analogy}"`;
+            document.getElementById('modal-example-title').innerText = "Real World Example";
+            document.getElementById('modal-example').innerText = data.example;
+            document.getElementById('modal-code-title').innerText = "XML Code Snippet";
+            document.getElementById('modal-code').innerText = data.code;
+
+            showModal();
+        };
+
+        window.openLifecycleModal = function(key) {
+            const data = lifecycleDetails[key];
+            if(!data) return;
+
+            // Hide Diagram Container, Show Icon Container
+            document.getElementById('modal-diagram-container').classList.add('hidden');
+            document.getElementById('modal-icon-container').classList.remove('hidden');
+
+            // Set Content
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-analogy').innerText = `"${data.analogy}"`;
+            document.getElementById('modal-example-title').innerText = "What happens here?";
+            document.getElementById('modal-example').innerText = data.example;
+            document.getElementById('modal-code-title').innerText = "Java/Kotlin Code";
+            document.getElementById('modal-code').innerText = data.code;
+
+            showModal();
+        }
+
+        function showModal() {
+            const modal = document.getElementById('layout-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+        }
+
+        window.closeLayoutModal = function() {
+            const modal = document.getElementById('layout-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+        };
+
+        // Close modal on Escape key
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            if (evt.keyCode == 27) {
+                window.closeLayoutModal();
+            }
+        };
+
+
+        // Quiz Functions
+        window.startQuiz = function() {
             document.getElementById('quiz-start').classList.add('hidden');
             document.getElementById('quiz-question').classList.remove('hidden');
             currentQuestionIndex = 0;
             score = 0;
             updateScore();
             loadQuestion();
-        }
+        };
 
         function loadQuestion() {
             const q = quizQuestions[currentQuestionIndex];
@@ -414,14 +895,13 @@
             q.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
                 btn.className = "w-full text-left p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition flex items-center";
-                btn.onclick = () => checkAnswer(index, btn);
+                btn.onclick = () => window.checkAnswer(index, btn);
                 btn.innerHTML = `<div class="w-6 h-6 rounded-full border border-gray-300 mr-3 flex-shrink-0"></div> ${opt}`;
                 optionsDiv.appendChild(btn);
             });
         }
 
-        function checkAnswer(selectedIndex, btnElement) {
-            // Disable all buttons
+        window.checkAnswer = function(selectedIndex, btnElement) {
             const buttons = document.getElementById('q-options').children;
             for(let btn of buttons) {
                 btn.disabled = true;
@@ -442,44 +922,50 @@
             } else {
                 btnElement.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
                 btnElement.querySelector('div').classList.add('bg-red-500', 'border-red-500');
-                
-                // Highlight correct one
                 const correctBtn = buttons[q.correct];
                 correctBtn.classList.remove('opacity-50');
                 correctBtn.classList.add('bg-green-50', 'border-green-300');
-                
                 feedbackDiv.innerHTML = `<p class="font-bold text-red-700">Incorrect</p><p class="text-sm text-red-600 mt-1">${q.explanation}</p>`;
                 feedbackDiv.className = "mt-6 p-4 rounded-lg bg-red-50 border border-red-200 block";
             }
-
             document.getElementById('next-btn').classList.remove('hidden');
-        }
+        };
 
-        function nextQuestion() {
+        window.nextQuestion = function() {
             currentQuestionIndex++;
             if(currentQuestionIndex < quizQuestions.length) {
                 loadQuestion();
             } else {
                 showResults();
             }
-        }
+        };
 
         function updateScore() {
             document.getElementById('score').innerText = score;
         }
 
-        function showResults() {
+        async function showResults() {
             document.getElementById('quiz-question').classList.add('hidden');
             document.getElementById('quiz-result').classList.remove('hidden');
             document.getElementById('final-score').innerText = score;
             
-            // Check and Save High Score
-            const currentHighScore = localStorage.getItem('androidQuizHighScore') || 0;
             const badge = document.getElementById('new-record-badge');
             
-            if (score > currentHighScore) {
-                localStorage.setItem('androidQuizHighScore', score);
+            // Check if new record logic
+            if (score > globalHighScore) {
+                globalHighScore = score;
                 badge.classList.remove('hidden');
+                
+                // SAVE TO FIRESTORE
+                if(currentUser) {
+                    const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'scores', 'android_basics');
+                    try {
+                        await setDoc(docRef, { score: score }, { merge: true });
+                        document.getElementById('start-high-score').innerText = globalHighScore; // Update start screen
+                    } catch(e) {
+                        console.error("Error saving score", e);
+                    }
+                }
             } else {
                 badge.classList.add('hidden');
             }
@@ -495,13 +981,11 @@
             }
         }
 
-        function resetQuiz() {
+        window.resetQuiz = function() {
             document.getElementById('quiz-result').classList.add('hidden');
-            // Update the start screen high score just in case they beat it
-            const savedScore = localStorage.getItem('androidQuizHighScore') || 0;
-            document.getElementById('start-high-score').innerText = savedScore;
-            startQuiz();
-        }
+            window.startQuiz();
+        };
+
     </script>
 </body>
 </html>
