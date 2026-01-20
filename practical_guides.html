@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Practical Guides | Labs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+        .log-entry { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Android Studio Dark Theme Mimic */
+        .editor-bg { background-color: #2B2B2B; color: #A9B7C6; }
+        .keyword { color: #CC7832; font-weight: bold; }
+        .string { color: #6A8759; }
+        .function { color: #FFC66D; }
+        .annotation { color: #BBB529; }
+        .comment { color: #808080; font-style: italic; }
+        
+        /* Device Simulator */
+        .device-frame { border: 12px solid #1e293b; border-radius: 24px; overflow: hidden; position: relative; background: #fff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .device-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 40%; height: 20px; background: #1e293b; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; z-index: 10; }
+        
+        /* Tab Styles */
+        .tab-btn { white-space: nowrap; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: 700; transition: all 0.2s; border-bottom-width: 2px; border-color: transparent; color: #64748b; }
+        .tab-btn:hover { color: #334155; background-color: #f8fafc; }
+        .tab-active { color: #2563eb; border-color: #2563eb; background-color: #fff; }
+    </style>
+</head>
+<body class="bg-slate-100 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center hover:opacity-80 transition group">
+                        <i class="fa-solid fa-arrow-left text-gray-500 mr-3 group-hover:-translate-x-1 transition"></i>
+                        <span class="font-bold text-xl tracking-tight">Back to Notes</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm font-medium text-slate-500">Practical Labs:</span>
+                    <a href="#lifecycle-lab" class="text-sm font-bold text-slate-700 hover:text-green-600 transition">Lifecycle</a>
+                    <a href="#layout-lab" class="text-sm font-bold text-slate-700 hover:text-blue-600 transition">Layouts</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24 pb-12 max-w-7xl mx-auto px-4">
+        
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-bold text-slate-900 mb-4">Developer Virtual Labs</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Don't just read the theory. See the code, run the simulation, and verify the logs yourself.
+                These labs simulate the behavior of a real Android device and the Android Studio Logcat.
+            </p>
+        </div>
+
+        <!-- LAB 1: ACTIVITY LIFECYCLE -->
+        <section id="lifecycle-lab" class="bg-white rounded-2xl shadow-xl overflow-hidden mb-16 border border-slate-200">
+            <div class="bg-slate-900 text-white p-6 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold flex items-center">
+                        <i class="fa-solid fa-flask text-green-400 mr-3"></i> 
+                        Lab 1: The Lifecycle Proof
+                    </h2>
+                    <p class="text-slate-400 text-sm mt-1">Goal: Verify the execution order of Activity methods using Logs.</p>
+                </div>
+                <button onclick="clearLogs()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded transition">
+                    <i class="fa-solid fa-trash mr-1"></i> Clear Logcat
+                </button>
+            </div>
+
+            <div class="grid lg:grid-cols-2">
+                <!-- LEFT: Code Editor -->
+                <div class="editor-bg p-6 font-mono text-sm overflow-x-auto border-r border-slate-700">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-600 pb-2">
+                        <span class="text-slate-400">MainActivity.java</span>
+                        <span class="text-xs bg-green-900 text-green-300 px-2 py-1 rounded">Read Only</span>
+                    </div>
+<pre><code><span class="keyword">public class</span> MainActivity <span class="keyword">extends</span> AppCompatActivity {
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> <span class="function">onCreate</span>(Bundle savedInstanceState) {
+        <span class="keyword">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        <span class="function">Log.d</span>(<span class="string">"Lifecycle"</span>, <span class="string">"onCreate: App Created"</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> <span class="function">onStart</span>() {
+        <span class="keyword">super</span>.onStart();
+        <span class="function">Log.d</span>(<span class="string">"Lifecycle"</span>, <span class="string">"onStart: Visible now"</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> <span class="function">onResume</span>() {
+        <span class="keyword">super</span>.onResume();
+        <span class="function">Log.d</span>(<span class="string">"Lifecycle"</span>, <span class="string">"onResume: Interactive now"</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> <span class="function">onPause</span>() {
+        <span class="keyword">super</span>.onPause();
+        <span class="function">Log.d</span>(<span class="string">"Lifecycle"</span>, <span class="string">"onPause: Losing focus"</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> <span class="function">onStop</span>() {
+        <span class="keyword">super</span>.onStop();
+        <span class="function">Log.d</span>(<span class="string">"Lifecycle"</span>, <span class="string">"onStop: Hidden"</span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> <span class="function">onDestroy</span>() {
+        <span class="keyword">super</span>.onDestroy();
+        <span class="function">Log.d</span>(<span class="string">"Lifecycle"</span>, <span class="string">"onDestroy: Cleanup"</span>);
+    }
+}</code></pre>
+                </div>
+
+                <!-- RIGHT: Simulator -->
+                <div class="bg-slate-100 p-6 flex flex-col">
+                    
+                    <!-- Controls -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button id="btn-launch" onclick="simLaunch()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-bold shadow transition flex-1">
+                            <i class="fa-solid fa-play mr-2"></i> Launch App
+                        </button>
+                        <button id="btn-home" onclick="simHome()" class="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded font-bold shadow transition flex-1 opacity-50 cursor-not-allowed" disabled>
+                            <i class="fa-solid fa-house mr-2"></i> Press Home
+                        </button>
+                        <button id="btn-restore" onclick="simRestore()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold shadow transition flex-1 opacity-50 cursor-not-allowed" disabled>
+                            <i class="fa-solid fa-rotate-left mr-2"></i> Restore
+                        </button>
+                        <button id="btn-kill" onclick="simKill()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-bold shadow transition flex-1 opacity-50 cursor-not-allowed" disabled>
+                            <i class="fa-solid fa-xmark mr-2"></i> Kill App
+                        </button>
+                    </div>
+
+                    <!-- Simulated Screen & Logcat -->
+                    <div class="grid grid-cols-2 gap-4 flex-grow">
+                        <!-- Device Screen -->
+                        <div class="device-frame h-64 bg-black flex flex-col items-center justify-center text-white relative">
+                            <div class="device-notch"></div>
+                            <div id="device-screen-content" class="text-center opacity-50">
+                                <i class="fa-brands fa-android text-4xl mb-2"></i>
+                                <p class="text-xs">OS Ready</p>
+                            </div>
+                        </div>
+
+                        <!-- Logcat -->
+                        <div class="bg-black text-green-400 font-mono text-xs p-3 rounded h-64 overflow-y-auto shadow-inner border border-slate-700 flex flex-col-reverse" id="logcat-container">
+                            <!-- Logs appear here -->
+                            <div class="text-slate-500 italic border-b border-slate-800 pb-1 mb-1">Logcat (D/Lifecycle)</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-yellow-800">
+                        <i class="fa-solid fa-circle-info mr-2"></i>
+                        <strong>Observe:</strong> Watch how logs appear in the terminal as you interact with the simulated device.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- LAB 2: LAYOUTS -->
+        <section id="layout-lab" class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+            <div class="bg-slate-900 text-white p-6">
+                <h2 class="text-2xl font-bold flex items-center">
+                    <i class="fa-solid fa-cubes text-blue-400 mr-3"></i> 
+                    Lab 2: Layout Construction
+                </h2>
+                <p class="text-slate-400 text-sm mt-1">Goal: Compare how different XML layouts render UI elements.</p>
+            </div>
+
+            <!-- Tab Selector (SCROLLABLE) -->
+            <div class="flex overflow-x-auto border-b border-slate-200 bg-slate-50 pb-1">
+                <button onclick="switchLayout('linear_v')" id="tab-linear_v" class="tab-btn tab-active">Linear (Vert)</button>
+                <button onclick="switchLayout('linear_h')" id="tab-linear_h" class="tab-btn">Linear (Horz)</button>
+                <button onclick="switchLayout('frame')" id="tab-frame" class="tab-btn">Frame</button>
+                <button onclick="switchLayout('relative')" id="tab-relative" class="tab-btn">Relative</button>
+                <button onclick="switchLayout('grid')" id="tab-grid" class="tab-btn">Grid</button>
+                <button onclick="switchLayout('constraint')" id="tab-constraint" class="tab-btn">Constraint</button>
+            </div>
+
+            <div class="grid lg:grid-cols-2">
+                <!-- LEFT: XML Editor -->
+                <div class="editor-bg p-6 font-mono text-sm overflow-x-auto min-h-[400px]">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-600 pb-2">
+                        <span class="text-slate-400">activity_layout.xml</span>
+                        <span class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded">XML Source</span>
+                    </div>
+                    <pre id="xml-display" class="whitespace-pre-wrap"></pre>
+                </div>
+
+                <!-- RIGHT: Preview Renderer -->
+                <div class="bg-slate-50 p-8 flex items-center justify-center min-h-[400px]">
+                    <div class="w-64 h-96 bg-white border-8 border-slate-800 rounded-3xl shadow-2xl overflow-hidden relative">
+                        <!-- Status Bar -->
+                        <div class="bg-slate-800 h-6 w-full flex justify-end items-center px-2 space-x-1">
+                            <div class="w-3 h-3 bg-slate-600 rounded-full"></div>
+                            <div class="w-3 h-3 bg-slate-600 rounded-full"></div>
+                        </div>
+                        
+                        <!-- Screen Content (Injected) -->
+                        <div id="layout-preview" class="w-full h-full p-4 relative">
+                            <!-- Content changes via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        // --- LIFECYCLE SIMULATOR LOGIC ---
+        const logcat = document.getElementById('logcat-container');
+        const screenContent = document.getElementById('device-screen-content');
+        const deviceFrame = document.querySelector('.device-frame');
+        
+        let appState = "KILLED"; // KILLED, RUNNING, BACKGROUND
+
+        function log(message) {
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric", second: "numeric" }) + "." + Math.floor(Math.random() * 999);
+            const line = document.createElement('div');
+            line.className = "log-entry mb-1";
+            line.innerHTML = `<span class="text-slate-500">[${time}]</span> <span class="text-green-400">D/Lifecycle:</span> ${message}`;
+            logcat.appendChild(line);
+            logcat.scrollTop = logcat.scrollHeight;
+        }
+
+        function updateScreen(text, colorClass) {
+            screenContent.innerHTML = `<h3 class="text-xl font-bold ${colorClass}">${text}</h3>`;
+            if (text === "App Running") {
+                deviceFrame.style.background = "#fff";
+                screenContent.innerHTML = `
+                    <div class="text-slate-800">
+                        <div class="h-8 bg-green-500 w-full mb-4 rounded"></div>
+                        <h1 class="text-2xl font-bold">My App</h1>
+                        <p class="text-sm mt-2">Hello World!</p>
+                        <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Click Me</button>
+                    </div>`;
+            } else if (text === "Home Screen") {
+                deviceFrame.style.background = "#334155"; // Wallpaper color
+                screenContent.innerHTML = `
+                    <div class="grid grid-cols-4 gap-2 opacity-50">
+                        <div class="w-8 h-8 bg-white rounded-full"></div>
+                        <div class="w-8 h-8 bg-white rounded-full"></div>
+                        <div class="w-8 h-8 bg-white rounded-full"></div>
+                        <div class="w-8 h-8 bg-white rounded-full"></div>
+                    </div>`;
+            } else {
+                deviceFrame.style.background = "#000";
+                screenContent.innerHTML = `<i class="fa-brands fa-android text-4xl mb-2 text-slate-600"></i><p class="text-xs text-slate-600">OS Ready</p>`;
+            }
+        }
+
+        function setButtons(launch, home, restore, kill) {
+            const updateBtn = (id, active) => {
+                const btn = document.getElementById(id);
+                btn.disabled = !active;
+                if(active) {
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    if(id === 'btn-launch') btn.classList.add('hover:bg-green-700');
+                    if(id === 'btn-home') btn.classList.add('hover:bg-slate-700');
+                    if(id === 'btn-restore') btn.classList.add('hover:bg-blue-700');
+                    if(id === 'btn-kill') btn.classList.add('hover:bg-red-700');
+                } else {
+                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                    if(id === 'btn-launch') btn.classList.remove('hover:bg-green-700');
+                    if(id === 'btn-home') btn.classList.remove('hover:bg-slate-700');
+                    if(id === 'btn-restore') btn.classList.remove('hover:bg-blue-700');
+                    if(id === 'btn-kill') btn.classList.remove('hover:bg-red-700');
+                }
+            };
+            
+            updateBtn('btn-launch', launch);
+            updateBtn('btn-home', home);
+            updateBtn('btn-restore', restore);
+            updateBtn('btn-kill', kill);
+        }
+
+        function simLaunch() {
+            log("---------------------------------");
+            log("Launch requested...");
+            setTimeout(() => log("onCreate: App Created"), 500);
+            setTimeout(() => log("onStart: Visible now"), 1000);
+            setTimeout(() => {
+                log("onResume: Interactive now");
+                updateScreen("App Running", "text-slate-800");
+                appState = "RUNNING";
+                setButtons(false, true, false, true); // Can Home or Kill
+            }, 1500);
+        }
+
+        function simHome() {
+            log("---------------------------------");
+            log("Home button pressed...");
+            setTimeout(() => log("onPause: Losing focus"), 300);
+            setTimeout(() => {
+                log("onStop: Hidden");
+                updateScreen("Home Screen", "text-white");
+                appState = "BACKGROUND";
+                setButtons(false, false, true, true); // Can Restore or Kill
+            }, 1000);
+        }
+
+        function simRestore() {
+            log("---------------------------------");
+            log("User tapped app icon...");
+            setTimeout(() => log("onRestart: Returning"), 300);
+            setTimeout(() => log("onStart: Visible now"), 600);
+            setTimeout(() => {
+                log("onResume: Interactive now");
+                updateScreen("App Running", "text-slate-800");
+                appState = "RUNNING";
+                setButtons(false, true, false, true);
+            }, 1200);
+        }
+
+        function simKill() {
+            log("---------------------------------");
+            if (appState === "RUNNING") {
+                log("onPause: Losing focus");
+                log("onStop: Hidden");
+            }
+            setTimeout(() => {
+                log("onDestroy: Cleanup");
+                updateScreen("OS Ready", "text-slate-600");
+                appState = "KILLED";
+                setButtons(true, false, false, false);
+            }, 800);
+        }
+
+        function clearLogs() {
+            logcat.innerHTML = '<div class="text-slate-500 italic border-b border-slate-800 pb-1 mb-1">Logcat (D/Lifecycle)</div>';
+        }
+
+
+        // --- LAYOUT LAB LOGIC ---
+        const layoutConfigs = {
+            'linear_v': {
+                xml: `&lt;LinearLayout
+    android:orientation="vertical"
+    android:padding="16dp"&gt;
+
+    &lt;EditText android:hint="Email" /&gt;
+    &lt;EditText android:hint="Pass" /&gt;
+    &lt;Button android:text="Login" /&gt;
+
+&lt;/LinearLayout&gt;`,
+                render: `<div class="flex flex-col gap-4 h-full">
+                            <input type="text" placeholder="Email" class="border-b-2 border-slate-300 p-2 text-sm bg-transparent outline-none">
+                            <input type="password" placeholder="Pass" class="border-b-2 border-slate-300 p-2 text-sm bg-transparent outline-none">
+                            <button class="bg-blue-500 text-white font-bold py-2 rounded shadow mt-2">Login</button>
+                         </div>`
+            },
+            'linear_h': {
+                xml: `&lt;LinearLayout
+    android:orientation="horizontal"&gt;
+
+    &lt;Button 
+        android:text="Cancel"
+        android:layout_weight="1" /&gt;
+    
+    &lt;Button 
+        android:text="OK"
+        android:layout_weight="1" /&gt;
+
+&lt;/LinearLayout&gt;`,
+                render: `<div class="flex gap-2 h-full items-start">
+                            <button class="bg-gray-300 text-slate-700 font-bold py-2 px-4 rounded shadow flex-1">Cancel</button>
+                            <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow flex-1">OK</button>
+                         </div>`
+            },
+            'frame': {
+                xml: `&lt;FrameLayout&gt;
+
+    &lt;ImageView
+        android:src="@drawable/video_thumb" /&gt;
+    
+    &lt;ImageView
+        android:src="@drawable/ic_play"
+        android:layout_gravity="center" /&gt;
+
+&lt;/FrameLayout&gt;`,
+                render: `<div class="relative w-full h-full bg-slate-200 flex items-center justify-center rounded border border-slate-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-slate-400 to-slate-300 flex items-center justify-center text-slate-500 text-xs">Thumbnail</div>
+                            <div class="w-12 h-12 bg-white/80 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm z-10">
+                                <i class="fa-solid fa-play text-slate-800 ml-1"></i>
+                            </div>
+                         </div>`
+            },
+            'relative': {
+                xml: `&lt;RelativeLayout&gt;
+
+    &lt;Button 
+        android:id="@+id/btn"
+        android:layout_centerInParent="true"
+        android:text="Center" /&gt;
+
+    &lt;TextView
+        android:layout_below="@id/btn"
+        android:layout_centerHorizontal="true"
+        android:text="I am below!" /&gt;
+
+&lt;/RelativeLayout&gt;`,
+                render: `<div class="relative w-full h-full">
+                            <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-500 text-white py-2 px-4 rounded shadow">Center</button>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-8 text-xs text-slate-600">I am below!</div>
+                         </div>`
+            },
+            'grid': {
+                xml: `&lt;GridLayout
+    android:columnCount="2"&gt;
+
+    &lt;Button android:text="1" /&gt;
+    &lt;Button android:text="2" /&gt;
+    &lt;Button android:text="3" /&gt;
+    &lt;Button android:text="4" /&gt;
+
+&lt;/GridLayout&gt;`,
+                render: `<div class="grid grid-cols-2 gap-2 h-full content-start">
+                            <div class="bg-gray-200 p-4 rounded flex items-center justify-center border border-gray-300 font-bold">1</div>
+                            <div class="bg-gray-200 p-4 rounded flex items-center justify-center border border-gray-300 font-bold">2</div>
+                            <div class="bg-gray-200 p-4 rounded flex items-center justify-center border border-gray-300 font-bold">3</div>
+                            <div class="bg-gray-200 p-4 rounded flex items-center justify-center border border-gray-300 font-bold">4</div>
+                         </div>`
+            },
+            'constraint': {
+                xml: `&lt;ConstraintLayout&gt;
+
+    &lt;ImageView
+        android:id="@+id/avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" /&gt;
+    
+    &lt;TextView
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        android:text="John Doe" /&gt;
+
+&lt;/ConstraintLayout&gt;`,
+                render: `<div class="relative w-full h-full">
+                            <div class="absolute top-0 left-0 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">JD</div>
+                            <div class="absolute top-0 left-14 font-bold text-slate-800">John Doe</div>
+                            
+                            <!-- Constraint Visuals -->
+                            <div class="absolute top-3 left-12 w-2 h-[2px] bg-blue-300"></div>
+                            <div class="absolute top-2 left-14 w-[2px] h-4 bg-green-300"></div>
+                         </div>`
+            }
+        };
+
+        function switchLayout(type) {
+            // Update Code
+            document.getElementById('xml-display').innerHTML = layoutConfigs[type].xml;
+            
+            // Update Preview
+            document.getElementById('layout-preview').innerHTML = layoutConfigs[type].render;
+
+            // Update Tabs Style
+            const tabs = ['linear_v', 'linear_h', 'frame', 'relative', 'grid', 'constraint'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tab-' + t);
+                if (t === type) {
+                    btn.className = "tab-btn tab-active";
+                } else {
+                    btn.className = "tab-btn";
+                }
+            });
+        }
+
+        // Initialize
+        switchLayout('linear_v');
+    </script>
+</body>
+</html>
