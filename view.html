@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android UI Notes | Views, XML & Layouts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        
+        /* Custom Code Block Styling */
+        .code-block {
+            background-color: #1e293b; /* Slate 800 */
+            color: #4ade80; /* Green 400 */
+            font-family: 'Courier New', Courier, monospace;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Interactive Elements */
+        .interactive-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .interactive-card:hover {
+            transform: translateY(-2px);
+            border-color: #3DDC84;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal Styles */
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow: hidden; }
+        
+        /* Quiz Styles */
+        .quiz-option { cursor: pointer; transition: all 0.2s; }
+        .quiz-option:hover { background-color: #f0fdf4; border-color: #3DDC84; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <nav class="bg-white shadow-md fixed w-full z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center group">
+                        <i class="fa-brands fa-android text-3xl text-green-500 mr-3 group-hover:animate-bounce"></i>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">Discover Android</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 hover:text-green-600 transition text-sm font-medium">Home</a>
+                    <a href="view.html" class="text-green-600 font-bold text-sm border-b-2 border-green-500 pb-1">Views & XML</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-slate-900 text-white pt-32 pb-20 relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-green-500 opacity-10 blur-3xl"></div>
+        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+            <div class="inline-block mb-4 px-3 py-1 bg-slate-800 rounded-full border border-slate-700 text-xs font-mono text-green-400">
+                Unit 2.1
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Views, XML & Layouts</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                "A View is a rectangular area visible on the screen."<br>
+                Master the Java objects that draw your UI and the XML family tree that organizes them.
+            </p>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <section class="py-16 bg-white">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex items-center mb-8">
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full mr-3 uppercase tracking-wider">Topic 1-2</span>
+                    <h2 class="text-3xl font-bold text-slate-900">Views & ViewGroups</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-start">
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <h3 class="font-bold text-slate-800 mb-2">Definition of a View</h3>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2 text-sm">
+                                <li>A rectangular area on the screen.</li>
+                                <li>Has a width, height, and sometimes a background color.</li>
+                                <li><strong>Key Concept:</strong> The View on the screen is drawn by a <strong>Java Object</strong> inside the Android device. The Java object is the "real" View.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                            <h3 class="font-bold text-blue-900 mb-2">The ViewGroup</h3>
+                            <p class="text-sm text-blue-800 mb-3">
+                                A <strong>ViewGroup</strong> is a big View—often invisible—that acts as a container.
+                            </p>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><i class="fa-solid fa-arrow-right mr-2"></i>It positions smaller Views inside it.</li>
+                                <li><i class="fa-solid fa-arrow-right mr-2"></i>Creates a <strong>Parent-Child</strong> relationship.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-gray-200 text-center relative">
+                        
+                        <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Visualizing Hierarchy</div>
+                        <div class="border-2 border-dashed border-orange-300 p-6 relative rounded-lg bg-white mx-auto max-w-xs">
+                            <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-orange-500">ViewGroup (Parent)</span>
+                            <div class="flex gap-2 justify-center mt-2">
+                                <div class="h-12 w-16 bg-blue-100 border border-blue-300 rounded flex items-center justify-center text-[10px] text-blue-600 font-bold">Child 1</div>
+                                <div class="h-12 w-16 bg-blue-100 border border-blue-300 rounded flex items-center justify-center text-[10px] text-blue-600 font-bold">Child 2</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-4 italic">The Parent controls where the Children sit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-slate-50 border-t border-gray-200">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex items-center mb-6">
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full mr-3 uppercase tracking-wider">Topic 5-6</span>
+                    <h2 class="text-2xl font-bold text-slate-900">XML Basics & Syntax</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="space-y-6">
+                        <p class="text-gray-600 leading-relaxed">
+                            <strong>XML</strong> (Extensible Markup Language)  describes the layout in a "Family Tree" structure. An Android layout always consists of <strong>one root View</strong> which may contain smaller ones.
+                        </p>
+                        
+                        <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                            <h4 class="font-bold text-slate-800 mb-3 border-b pb-2">XML Tag Rules</h4>
+                            <div class="space-y-4 text-sm">
+                                <div>
+                                    <span class="font-bold text-green-600">1. Opening & Closing Tags </span>
+                                    <p class="text-gray-500 mt-1">Used for elements that contain others (like LinearLayout).</p>
+                                    <code class="bg-gray-100 px-2 py-1 rounded block mt-1 w-fit">&lt;LinearLayout&gt; ... &lt;/LinearLayout&gt;</code>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-green-600">2. Self-Closing Tags </span>
+                                    <p class="text-gray-500 mt-1">Used for elements that don't hold content (like TextView).</p>
+                                    <code class="bg-gray-100 px-2 py-1 rounded block mt-1 w-fit">&lt;TextView ... /&gt;</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="flex justify-between items-end mb-2 px-1">
+                            <span class="text-xs font-bold text-slate-500 uppercase">LinearLayout Example (Vertical)</span>
+                        </div>
+                        <div class="code-block shadow-lg">
+<span class="text-gray-500">&lt;!-- Parent: LinearLayout --&gt;</span>
+<span class="text-yellow-300">&lt;LinearLayout</span>
+    <span class="text-purple-300">android:layout_width</span>=<span class="text-green-300">"match_parent"</span>
+    <span class="text-purple-300">android:layout_height</span>=<span class="text-green-300">"match_parent"</span>
+    <span class="text-purple-300">android:orientation</span>=<span class="text-green-300">"vertical"</span>
+    <span class="text-purple-300">android:background</span>=<span class="text-green-300">"#E0E0E0"</span><span class="text-yellow-300">&gt;</span>
+
+    <span class="text-gray-500">&lt;!-- Child 1 --&gt;</span>
+    <span class="text-yellow-300">&lt;TextView</span>
+        <span class="text-purple-300">android:text</span>=<span class="text-green-300">"Title"</span>
+        <span class="text-purple-300">android:layout_width</span>=<span class="text-green-300">"wrap_content"</span>
+        <span class="text-purple-300">android:layout_height</span>=<span class="text-green-300">"wrap_content"</span> <span class="text-yellow-300">/&gt;</span>
+
+    <span class="text-gray-500">&lt;!-- Child 2 --&gt;</span>
+    <span class="text-yellow-300">&lt;TextView</span>
+        <span class="text-purple-300">android:text</span>=<span class="text-green-300">"Subtitle"</span>
+        <span class="text-purple-300">android:layout_width</span>=<span class="text-green-300">"wrap_content"</span>
+        <span class="text-purple-300">android:layout_height</span>=<span class="text-green-300">"wrap_content"</span> <span class="text-yellow-300">/&gt;</span>
+
+<span class="text-yellow-300">&lt;/LinearLayout&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-slate-900 text-white">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-3xl font-bold text-green-400 mb-2 text-center">Units: dp vs sp</h2>
+                <p class="text-gray-400 text-center mb-10 text-sm">Respecting user preferences in Settings.</p>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                            <h4 class="font-bold text-green-400 mb-1">sp (Scale-Independent Pixels) </h4>
+                            <p class="text-sm text-gray-300">
+                                <strong>Definition:</strong> A unit of length for specifying the size of a font.
+                                <br><strong>Behavior:</strong> Its length depends on the user's preference for font size set in the Settings app. Always use `sp` for text.
+                            </p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                            <h4 class="font-bold text-blue-400 mb-1">dp (Density-Independent Pixels) </h4>
+                            <p class="text-sm text-gray-300">
+                                <strong>Definition:</strong> A unit for layout dimensions (width, height, padding).
+                                <br><strong>Behavior:</strong> Consistent physical size across screens. Does NOT scale with font settings.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-2xl text-center">
+                        <div class="flex justify-between items-center mb-6 border-b border-slate-700 pb-4">
+                            <h3 class="font-bold text-white"><i class="fa-solid fa-mobile-screen mr-2"></i>Simulator</h3>
+                            <span id="sim-status" class="text-xs text-gray-400">Settings: Normal</span>
+                        </div>
+                        <div class="space-y-4 mb-6">
+                            <div class="bg-slate-900 p-3 rounded">
+                                <p id="sim-text-sp" class="text-green-400 font-bold transition-all duration-500" style="font-size: 20px;">I am Text (20sp)</p>
+                                <span class="text-[10px] text-gray-500">Scales with Settings</span>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded">
+                                <p id="sim-text-dp" class="text-blue-400 font-bold transition-all duration-500" style="font-size: 20px;">I am Fixed (20dp)</p>
+                                <span class="text-[10px] text-gray-500">Stays Constant</span>
+                            </div>
+                        </div>
+                        <button onclick="toggleSystemFont()" id="sim-btn" class="bg-slate-600 hover:bg-green-600 text-xs px-4 py-2 rounded transition font-bold border border-slate-500">
+                            Simulate "Large Text" Setting
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4">Hexadecimal Colors</h2>
+                <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Colors are created by mixing <strong>Red, Green, and Blue</strong> (RGB).
+                    <br>Format: <code>#RRGGBB</code>.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-8 items-center text-left">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-4">The Logic of Hex</h3>
+                        <p class="text-sm text-gray-600 mb-4">
+                            A color is defined by a pair of hexadecimal digits for each component.
+                        </p>
+                        <div class="grid grid-cols-3 gap-2 text-center text-sm font-mono mb-4">
+                            <div class="bg-gray-100 p-2 rounded">
+                                <div class="font-bold">00</div>
+                                <div class="text-xs text-gray-400">Minimum </div>
+                            </div>
+                            <div class="bg-gray-100 p-2 rounded">
+                                <div class="font-bold">80</div>
+                                <div class="text-xs text-gray-400">Halfway </div>
+                            </div>
+                            <div class="bg-gray-100 p-2 rounded">
+                                <div class="font-bold">FF</div>
+                                <div class="text-xs text-gray-400">Maximum </div>
+                            </div>
+                        </div>
+                        <button onclick="openModal('color-modal')" class="w-full bg-slate-800 text-white py-2 rounded text-sm hover:bg-slate-700 transition">
+                            Open Color Cheat Sheet
+                        </button>
+                    </div>
+
+                    <div class="flex justify-center gap-4">
+                        <div class="flex flex-col items-center">
+                            <div class="w-16 h-16 bg-[#FF0000] rounded-full shadow-md mb-2 border-4 border-white ring-1 ring-gray-200"></div>
+                            <code class="text-xs bg-gray-100 px-2 py-1 rounded">#FF0000</code>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-16 h-16 bg-[#00FF00] rounded-full shadow-md mb-2 border-4 border-white ring-1 ring-gray-200"></div>
+                            <code class="text-xs bg-gray-100 px-2 py-1 rounded">#00FF00</code>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-16 h-16 bg-[#0000FF] rounded-full shadow-md mb-2 border-4 border-white ring-1 ring-gray-200"></div>
+                            <code class="text-xs bg-gray-100 px-2 py-1 rounded">#0000FF</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-slate-50 border-t border-gray-200">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900">ImageView & Performance</h2>
+                    <button onclick="openModal('attr-modal')" class="bg-white border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm hover:shadow-md transition">
+                        <i class="fa-solid fa-list mr-2"></i>View All Attributes
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-gray-600 mb-4">
+                            Use <strong>ImageView</strong> to display images (icons/photos). You must place image files in the <code>res/drawable</code> folder.
+                        </p>
+                        <div class="code-block mb-4">
+&lt;ImageView
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:src="@drawable/cake"
+    android:scaleType="centerCrop" /&gt;
+                        </div>
+                        
+                        <div class="bg-orange-50 border-l-4 border-orange-400 p-6 rounded-r-lg mt-6">
+                            <div class="flex items-center mb-2">
+                                <i class="fa-solid fa-triangle-exclamation text-orange-500 mr-2"></i>
+                                <h4 class="font-bold text-orange-800">Topic 14: Handling Bitmaps</h4>
+                            </div>
+                            <p class="text-sm text-orange-800 leading-relaxed">
+                                <strong>Performance Warning:</strong> Handling large images (Bitmaps) consumes significant memory. 
+                                Loading huge images directly can cause your app to crash with an <code>OutOfMemoryError</code>.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl border border-gray-200">
+                        <h4 class="font-bold text-slate-800 mb-4 text-sm uppercase">ScaleType Visualizer</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="group cursor-pointer">
+                                <div class="bg-gray-100 p-1 rounded overflow-hidden h-32 flex items-center justify-center border hover:border-green-400 transition">
+                                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80" 
+                                         class="w-full h-full object-cover" alt="Beach">
+                                </div>
+                                <div class="text-center mt-2 text-xs font-mono font-bold">centerCrop</div>
+                            </div>
+                            <div class="group cursor-pointer">
+                                <div class="bg-gray-100 p-1 rounded overflow-hidden h-32 flex items-center justify-center border hover:border-green-400 transition">
+                                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80" 
+                                         class="w-full h-full object-contain" alt="Beach">
+                                </div>
+                                <div class="text-center mt-2 text-xs font-mono font-bold">fitCenter</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="quiz-section" class="py-16 bg-white border-t border-gray-200">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex items-center mb-8">
+                    <span class="bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full mr-3 uppercase tracking-wider">Topic 3 & 7</span>
+                    <h2 class="text-3xl font-bold text-slate-900">Test Your Knowledge</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-gray-200">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center">
+                            <i class="fa-solid fa-eye text-green-500 mr-2"></i> Identify the View
+                        </h3>
+                        <p class="text-sm text-gray-500 mb-6">Based on the YouTube App Example. Match the screen element to the View Type.</p>
+                        
+                        <div class="border border-gray-300 rounded mb-6 p-4 bg-gray-50 relative max-w-sm mx-auto shadow-inner bg-white">
+                            <div class="bg-white border p-2 mb-2 text-center text-sm font-bold shadow-sm relative">
+                                <span class="absolute -left-2 -top-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">A</span>
+                                Welcome to App 
+                            </div>
+                            <div class="bg-red-600 h-24 w-32 mx-auto rounded flex items-center justify-center shadow-sm relative mb-2">
+                                <span class="absolute -left-2 -top-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">B</span>
+                                <i class="fa-solid fa-play text-white text-2xl"></i>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="bg-white border flex-1 py-2 text-xs font-bold shadow-sm relative text-gray-700">
+                                    <span class="absolute -right-2 -top-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">C</span>
+                                    SKIP 
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 pl-4 border-l-2 border-green-200">
+                            <div class="text-sm flex justify-between">
+                                <span>Element A:</span> 
+                                <span class="font-bold text-slate-700 bg-green-100 px-2 rounded">TextView </span>
+                            </div>
+                            <div class="text-sm flex justify-between">
+                                <span>Element B:</span> 
+                                <span class="font-bold text-slate-700 bg-green-100 px-2 rounded">ImageView </span>
+                            </div>
+                            <div class="text-sm flex justify-between">
+                                <span>Element C:</span> 
+                                <span class="font-bold text-slate-700 bg-green-100 px-2 rounded">Button </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-gray-200">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center">
+                            <i class="fa-solid fa-code text-blue-500 mr-2"></i> XML Syntax Rules
+                        </h3>
+                        <p class="text-sm text-gray-500 mb-6">Test your knowledge of XML tags.</p>
+
+                        <div class="space-y-6">
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <p class="font-bold text-slate-800 text-sm mb-2">1. Which characters begin and end a tag? </p>
+                                <div class="flex gap-2">
+                                    <div class="px-3 py-1 bg-green-100 text-green-800 rounded border border-green-200 text-xs font-mono font-bold">&lt; &gt;</div>
+                                    <div class="px-3 py-1 bg-gray-50 text-gray-400 rounded border text-xs font-mono opacity-50">{ }</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <p class="font-bold text-slate-800 text-sm mb-2">2. How do you close a tag without content? </p>
+                                <div class="flex gap-2">
+                                    <div class="px-3 py-1 bg-green-100 text-green-800 rounded border border-green-200 text-xs font-mono font-bold">/&gt;</div>
+                                    <div class="px-3 py-1 bg-gray-50 text-gray-400 rounded border text-xs font-mono opacity-50">&lt;/Tag&gt;</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <p class="font-bold text-slate-800 text-sm mb-2">3. Can an element have multiple parents? </p>
+                                <div class="flex gap-2">
+                                    <div class="px-3 py-1 bg-gray-50 text-gray-400 rounded border text-xs opacity-50">Yes</div>
+                                    <div class="px-3 py-1 bg-green-100 text-green-800 rounded border border-green-200 text-xs font-bold">No (Only 1 Parent)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-950 text-gray-500 py-10 text-center border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm mb-2">&copy; 2026 Android Study Notes.</p>
+            <p class="text-xs text-slate-600">Based on Practice Set 1-1.</p>
+        </div>
+    </footer>
+
+
+    <div id="attr-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="absolute w-full h-full bg-gray-900 opacity-80" onclick="closeModal('attr-modal')"></div>
+        <div class="bg-white w-11/12 md:max-w-2xl mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-[80vh]">
+            <div class="bg-purple-600 text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-lg">Topic 13: ImageView Attributes </h3>
+                <button onclick="closeModal('attr-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6">
+                <table class="w-full text-sm text-left text-gray-600">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr><th class="px-4 py-3">Attribute</th><th class="px-4 py-3">Description</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:src</td><td class="px-4 py-2">Sets a drawable as the content of this ImageView.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:scaleType</td><td class="px-4 py-2">Controls how the image should be resized or moved.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:adjustViewBounds</td><td class="px-4 py-2">Set true to adjust bounds to preserve aspect ratio.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:cropToPadding</td><td class="px-4 py-2">If true, the image will be cropped to fit within its padding.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:baseline</td><td class="px-4 py-2">The offset of the baseline within this view.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:baselineAlignBottom</td><td class="px-4 py-2">If true, the image view will be baseline aligned with its bottom edge.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:maxHeight</td><td class="px-4 py-2">An optional argument to supply a maximum height for this view.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:maxWidth</td><td class="px-4 py-2">An optional argument to supply a maximum width for this view.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:tint</td><td class="px-4 py-2">The tinting color for the image.</td></tr>
+                        <tr><td class="px-4 py-2 font-mono text-purple-700">android:tintMode</td><td class="px-4 py-2">Blending mode used to apply the image tint.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="color-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="absolute w-full h-full bg-gray-900 opacity-80" onclick="closeModal('color-modal')"></div>
+        <div class="bg-white w-11/12 md:max-w-lg mx-auto rounded shadow-lg z-50">
+            <div class="bg-slate-800 text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-lg">Hex Reference Table </h3>
+                <button onclick="closeModal('color-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 grid grid-cols-2 gap-4 text-xs font-bold">
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#000000]"></div> #000000 (Black) </div>
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#FFFFFF] border"></div> #FFFFFF (White) </div>
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#FF0000]"></div> #FF0000 (Red) </div>
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#00FF00]"></div> #00FF00 (Green) </div>
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#0000FF]"></div> #0000FF (Blue) </div>
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#FFFF00]"></div> #FFFF00 (Yellow) </div>
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#FF00FF]"></div> #FF00FF (Purple) </div>
+                <div class="flex items-center p-2 border rounded"><div class="w-6 h-6 mr-2 bg-[#808080]"></div> #808080 (Gray) </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Logic
+        function openModal(id) {
+            document.getElementById(id).classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+        }
+        document.onkeydown = function(evt) { if (evt.keyCode == 27) { closeModal('attr-modal'); closeModal('color-modal'); }};
+
+        // Font Simulator
+        let isLargeFont = false;
+        function toggleSystemFont() {
+            isLargeFont = !isLargeFont;
+            const spText = document.getElementById('sim-text-sp');
+            const dpText = document.getElementById('sim-text-dp');
+            const btn = document.getElementById('sim-btn');
+            const status = document.getElementById('sim-status');
+            
+            if (isLargeFont) {
+                spText.style.fontSize = "32px"; 
+                dpText.style.fontSize = "20px";
+                btn.innerText = "Reset to Normal";
+                btn.classList.add('bg-green-600', 'text-white');
+                status.innerText = "Settings: Large Text";
+                status.classList.add('text-green-600', 'font-bold');
+            } else {
+                spText.style.fontSize = "20px";
+                dpText.style.fontSize = "20px";
+                btn.innerText = "Simulate \"Large Text\" Setting";
+                btn.classList.remove('bg-green-600', 'text-white');
+                status.innerText = "Settings: Normal";
+                status.classList.remove('text-green-600', 'font-bold');
+            }
+        }
+    </script>
+</body>
+</html>

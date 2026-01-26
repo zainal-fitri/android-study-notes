@@ -95,6 +95,7 @@
                             <a href="#devices" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 border-b border-gray-50">Devices</a>
                             <a href="#architecture" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 border-b border-gray-50">Architecture</a>
                             <a href="#ui" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700">UI & Layouts</a>
+                            <a href="#advanced-ui" class="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700">Advanced UI</a>
                         </div>
                     </div>
 
@@ -366,6 +367,71 @@
         </div>
     </section>
 
+    <section id="advanced-ui" class="py-20 bg-slate-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900">Advanced UI Components</h2>
+                <p class="mt-4 text-gray-600">Fragments, Notifications, Actions, and Menus.</p>
+                <p class="text-sm text-green-600 font-medium mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click on any card to view the Code</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div onclick="openLayoutModal('fragment')" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-green-300 transition cursor-pointer group relative">
+                    <div class="absolute top-4 right-4 text-gray-300 group-hover:text-green-500"><i class="fa-solid fa-code"></i></div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-lg mr-4"><i class="fa-solid fa-puzzle-piece text-blue-600 text-xl"></i></div>
+                        <h3 class="text-xl font-bold group-hover:text-green-600 transition">Implement Fragments</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">A Fragment is a modular section of an activity, which has its own lifecycle and receives its own input events.</p>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> "Sub-Activity" concept.</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Reusable across different activities.</li>
+                    </ul>
+                </div>
+
+                <div onclick="openLayoutModal('notification')" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-green-300 transition cursor-pointer group relative">
+                    <div class="absolute top-4 right-4 text-gray-300 group-hover:text-green-500"><i class="fa-solid fa-code"></i></div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-orange-100 p-3 rounded-lg mr-4"><i class="fa-solid fa-bell text-orange-600 text-xl"></i></div>
+                        <h3 class="text-xl font-bold group-hover:text-green-600 transition">Notifications & Actions</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Managing the Action Bar (App Bar) and alerting users outside of your application's UI.</p>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Notification Channels (8.0+).</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Menu items in Toolbar.</li>
+                    </ul>
+                </div>
+
+                <div onclick="openLayoutModal('view')" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-green-300 transition cursor-pointer group relative">
+                    <div class="absolute top-4 right-4 text-gray-300 group-hover:text-green-500"><i class="fa-solid fa-code"></i></div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-purple-100 p-3 rounded-lg mr-4"><i class="fa-solid fa-pen-nib text-purple-600 text-xl"></i></div>
+                        <h3 class="text-xl font-bold group-hover:text-green-600 transition">UI Design with View</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">The <code>View</code> class is the basic building block for UI components (buttons, text fields, etc.).</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                         <span class="text-xs bg-gray-100 px-2 py-1 rounded border">Attributes</span>
+                         <span class="text-xs bg-gray-100 px-2 py-1 rounded border">Visibility</span>
+                         <span class="text-xs bg-gray-100 px-2 py-1 rounded border">Padding/Margin</span>
+                    </div>
+                </div>
+
+                <div onclick="openLayoutModal('menu')" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-green-300 transition cursor-pointer group relative">
+                    <div class="absolute top-4 right-4 text-gray-300 group-hover:text-green-500"><i class="fa-solid fa-code"></i></div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-100 p-3 rounded-lg mr-4"><i class="fa-solid fa-image text-green-600 text-xl"></i></div>
+                        <h3 class="text-xl font-bold group-hover:text-green-600 transition">Pictures & Menus</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Displaying graphical content with ImageView and handling user options via Menus.</p>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> ScaleTypes for Images.</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Context vs Option Menus.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Quiz Section -->
     <section id="quiz" class="py-20 bg-slate-50 border-t border-gray-200">
         <div class="max-w-4xl mx-auto px-4">
@@ -442,6 +508,7 @@
 
     <!-- Interactive Logic (Standalone for GitHub Pages) -->
     <script>
+        
         // --- DATA ---
         const layerData = {
             1: { title: "1. Linux Kernel", desc: "The foundation. Interacts directly with hardware (drivers, power).", analogy: "The Engine Room / Foundation" },
@@ -466,7 +533,36 @@
             'frame': { title: "FrameLayout", analogy: "Stack of photos.", example: "Overlays (Play button on image).", code: "<FrameLayout>...", diagram: "Items stacked on Z-axis." },
             'relative': { title: "RelativeLayout", analogy: "Landmarks.", example: "Left of X, Below Y.", code: "<RelativeLayout>...", diagram: "Position relative to siblings." },
             'table': { title: "TableLayout", analogy: "Spreadsheet.", example: "Grid of buttons (Calculator).", code: "<TableLayout>...", diagram: "Rows and Columns." },
-            'grid': { title: "GridLayout", analogy: "Grid.", example: "Gallery of images.", code: "<GridLayout>...", diagram: "Flat grid structure." }
+            'grid': { title: "GridLayout", analogy: "Grid.", example: "Gallery of images.", code: "<GridLayout>...", diagram: "Flat grid structure." },
+                // --- NEW: Advanced UI Components ---
+            'fragment': { 
+                title: "Fragments", 
+                analogy: "A TV Picture-in-Picture.", 
+                example: "A Master/Detail flow (List on left, Details on right) on Tablets.", 
+                code: "// Kotlin: Add Fragment\nsupportFragmentManager.beginTransaction().apply {\n    replace(R.id.container, MyFragment())\n    addToBackStack(null)\n    commit()\n}", 
+                diagram: "Activity Lifecycle > Fragment Lifecycle" 
+            },
+            'notification': { 
+                title: "Notifications", 
+                analogy: "A tap on the shoulder.", 
+                example: "WhatsApp message alert while using another app.", 
+                code: "// 1. Create Channel (req for Android 8+)\nval channel = NotificationChannel(ID, NAME, IMPORTANCE)\n\n// 2. Build Notification\nval builder = NotificationCompat.Builder(this, ID)\n    .setSmallIcon(R.drawable.ic_bell)\n    .setContentTitle(\"Alert\")", 
+                diagram: "" 
+            },
+            'view': { 
+                title: "View Components", 
+                analogy: "Lego Bricks.", 
+                example: "Button, TextView, EditText, CheckBox.", 
+                code: "\n<Button\n    android:id=\"@+id/btn\"\n    android:layout_width=\"wrap_content\"\n    android:layout_height=\"wrap_content\"\n    android:padding=\"16dp\"\n    android:visibility=\"visible\"\n    android:background=\"@color/teal\" />", 
+                diagram: "" 
+            },
+            'menu': { 
+                title: "Menus & Images", 
+                analogy: "Restaurant Menu / Picture Frame.", 
+                example: "Three-dot menu in top right corner.", 
+                code: "// XML: res/menu/main_menu.xml\n<item android:id=\"@+id/settings\" title=\"Settings\" />\n\n// Kotlin: Inflate\noverride fun onCreateOptionsMenu(menu: Menu): Boolean {\n    menuInflater.inflate(R.menu.main_menu, menu)\n    return true\n}", 
+                diagram: "" 
+            }
         };
 
         const quizQuestions = [
@@ -507,7 +603,7 @@
             document.getElementById('modal-diagram-container').classList.remove('hidden');
             document.getElementById('modal-icon-container').classList.add('hidden');
             document.getElementById('modal-diagram').innerText = data.diagram; // Simplified diagram for this fix
-            fillModal(data.title, data.analogy, "Real World Example", data.example, "XML Code", data.code);
+            fillModal(data.title, data.analogy, "Real World Example", data.example, "Code", data.code);
         }
 
         function fillModal(title, analogy, exTitle, exText, codeTitle, codeText) {
